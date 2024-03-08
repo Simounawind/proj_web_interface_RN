@@ -32,10 +32,15 @@ nlp_custom = pipeline("ner", model=model_custom, tokenizer=tokenizer_custom)
 # Initialiser WikipediaAPI avec un agent utilisateur personnalisé pour les requêtes
 wiki_wiki = wikipediaapi.Wikipedia(language='fr', user_agent="MyAppName/1.0 (myemail@example.com)")
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+
 @app.get("/")
 async def root(request: Request):
     # Générer et retourner la page d'accueil en utilisant un template Jinja2
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.post("/analyze/")
 async def analyze_text(text: str = Form(default=""), file: UploadFile = File(None)):

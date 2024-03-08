@@ -1,125 +1,202 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyse sur les Entités Nommées (NER)</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .result-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 20px;
-            min-height: 100px;
-            background-color: #f9f9f9;
-        }
-        body {
-            padding-top: 20px;
-        }
-        .loading-spinner {
-            display: none;
-            width: 3rem;
-            height: 3rem;
-        }
-        #imagePreview {
-            margin-top: 20px;
-            max-height: 200px;
-        }
-    </style>
-</head>
-<body class="container">
-    <h1 class="mb-4">Analyse sur les Entités Nommées (NER)</h1>
-    <div class="mb-3">
-        <textarea id="textInput" class="form-control" rows="3" placeholder="Entrez du texte ici ou téléchargez un fichier ci-dessous"></textarea>
-    </div>
-    <div class="mb-3">
-        <input type="file" id="fileInput" class="form-control" onchange="previewImage()">
-    </div>
-    <div class="mb-3">
-        <button onclick="analyzeText()" class="btn btn-primary">Analyser</button>
-        <div class="loading-spinner">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Analyse en cours...</span>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>NLP Tools</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="static/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+            .result-box {
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-top: 20px;
+                min-height: 100px;
+                background-color: #f9f9f9;
+            }
+            body {
+                padding-top: 20px;
+            }
+            .loading-spinner {
+                display: none;
+                width: 3rem;
+                height: 3rem;
+            }
+            #imagePreview {
+                margin-top: 20px;
+                max-height: 200px;
+            }
+        </style>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="/">Extrait d'Entités Nommées (NER)</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
+                <a class="btn btn-primary" href="https://github.com/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
+            </div>
+            
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Menu
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Fonctions</div>
+                            <a class="nav-link" href="/static/docs.html" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Docs
+                            </a>
+                            <a class="nav-link" href="/static/codes.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Codes
+                            </a>
+                            <a class="nav-link" href="/static/eval.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Évaluation
+                            </a>
+                            <br>
+                        </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Projet Web Interface</div>
+                        <div class="small">By Xiaohua CUI, Yingzi LIU </div>
+                    </div>
+
+
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container" style="margin-left: 40px;">
+                        <h1 class="mb-4">Analyse sur les Entités Nommées (NER)</h1>
+                        <div class="mb-3">
+                            <textarea id="textInput" class="form-control" rows="3" placeholder="Entrez du texte ici ou téléchargez un fichier ci-dessous"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" id="fileInput" class="form-control" onchange="previewImage()">
+                        </div>
+                        <div class="mb-3">
+                            <button onclick="analyzeText()" class="btn btn-primary">Analyser</button>
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Analyse en cours...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="imagePreview"></div>
+                        <h2>Modèle spaCy</h2>
+                        <div id="entitiesSpacy" class="result-box"></div>
+                        <h2>Modèle dslim/bert-base-NER</h2>
+                        <div id="entitiesBertBaseNer" class="result-box"></div>
+                        <h2>Modèle Babelscape/wikineural-multilingual-ner</h2>
+                        <div id="entitiesWikineuralNer" class="result-box"></div>
+                        <h2>Modèle TinyBERT Finetuned</h2> <!-- Ajout du titre pour le modèle TinyBERT -->
+                        <div id="entitiesCustomModel" class="result-box"></div> <!-- Ajout de la boîte de résultats pour le modèle TinyBERT -->
+
+                        </div>
+                        <script>
+                            async function analyzeText() {
+                                let formData = new FormData();
+                                const textInput = document.getElementById('textInput').value;
+                                const fileInput = document.getElementById('fileInput').files[0];
+                                const spinner = document.querySelector('.loading-spinner');
+                        
+                                spinner.style.display = 'block'; // Show the spinner
+                        
+                                if (textInput) {
+                                    formData.append('text', textInput);
+                                } else if (fileInput) {
+                                    formData.append('file', fileInput);
+                                } else {
+                                    alert('Veuillez entrer du texte ou télécharger un fichier.');
+                                    spinner.style.display = 'none'; // Hide the spinner
+                                    return;
+                                }
+                        
+                                const response = await fetch('/analyze/', { // Modification de l'URL pour correspondre au nouvel endpoint
+                                    method: 'POST',
+                                    body: formData
+                                });
+                        
+                                spinner.style.display = 'none'; // Hide the spinner after the fetch call
+                        
+                                if (!response.ok) {
+                                    alert('Échec de l\'analyse du texte. Veuillez réessayer.');
+                                    return;
+                                }
+                        
+                                const data = await response.json(); // Assuming the response is in JSON
+                                // Display entities detected by spaCy
+                                displayEntities(data.entities_spacy, 'entitiesSpacy', false);
+                                // Display entities detected by dslim/bert-base-NER
+                                displayEntities(data.entities_bert_base_ner, 'entitiesBertBaseNer', true);
+                                // Display entities detected by Babelscape/wikineural-multilingual-ner
+                                displayEntities(data.entities_wikineural_ner, 'entitiesWikineuralNer', true);
+                                // Ajout de la logique pour afficher les entités détectées par le modèle TinyBERT
+                                displayEntities(data.entities_custom_model, 'entitiesCustomModel', true);
+                            }
+                    
+                            function displayEntities(entities, elementId, showScore) {
+                                const entitiesDiv = document.getElementById(elementId);
+                                entitiesDiv.innerHTML = ''; // Clear previous results
+                                entities.forEach(entity => {
+                                    const entityElement = document.createElement('div');
+                                    let textContent = `${entity.entity} (${entity.type})`;
+                                    if (showScore) {
+                                        textContent += ` - Score : ${entity.score.toFixed(2)}`;
+                                    }
+                                    entityElement.textContent = textContent;
+                                    entitiesDiv.appendChild(entityElement);
+                                });
+                            }
+                    
+                            function previewImage() {
+                                var oFReader = new FileReader();
+                                oFReader.readAsDataURL(document.getElementById("fileInput").files[0]);
+                    
+                                oFReader.onload = function (oFREvent) {
+                                    document.getElementById("imagePreview").innerHTML = '<img src="'+oFREvent.target.result+'" alt="Image preview" class="img-fluid"/>';
+                                };
+                            }
+                        </script>
+                        
+
+
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Github site : <a href="https://github.com/Simounawind/web_interface_projet"> 🏠</a>
+                            
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
-    </div>
-    <div id="imagePreview"></div>
-    <h2>Modèle spaCy</h2>
-    <div id="entitiesSpacy" class="result-box"></div>
-    <h2>Modèle dslim/bert-base-NER</h2>
-    <div id="entitiesBertBaseNer" class="result-box"></div>
-    <h2>Modèle Babelscape/wikineural-multilingual-ner</h2>
-    <div id="entitiesWikineuralNer" class="result-box"></div>
-    <h2>Modèle TinyBERT Finetuned</h2> <!-- Ajout du titre pour le modèle TinyBERT -->
-    <div id="entitiesCustomModel" class="result-box"></div> <!-- Ajout de la boîte de résultats pour le modèle TinyBERT -->
-
-    <script>
-        async function analyzeText() {
-            let formData = new FormData();
-    
-            const textInput = document.getElementById('textInput').value;
-            const fileInput = document.getElementById('fileInput').files[0];
-            const spinner = document.querySelector('.loading-spinner');
-    
-            spinner.style.display = 'block'; // Show the spinner
-    
-            if (textInput) {
-                formData.append('text', textInput);
-            } else if (fileInput) {
-                formData.append('file', fileInput);
-            } else {
-                alert('Veuillez entrer du texte ou télécharger un fichier.');
-                spinner.style.display = 'none'; // Hide the spinner
-                return;
-            }
-    
-            const response = await fetch('/analyze/', { // Modification de l'URL pour correspondre au nouvel endpoint
-                method: 'POST',
-                body: formData
-            });
-    
-            spinner.style.display = 'none'; // Hide the spinner after the fetch call
-    
-            if (!response.ok) {
-                alert('Échec de l\'analyse du texte. Veuillez réessayer.');
-                return;
-            }
-    
-            const data = await response.json(); // Assuming the response is in JSON
-            // Display entities detected by spaCy
-            displayEntities(data.entities_spacy, 'entitiesSpacy', false);
-            // Display entities detected by dslim/bert-base-NER
-            displayEntities(data.entities_bert_base_ner, 'entitiesBertBaseNer', true);
-            // Display entities detected by Babelscape/wikineural-multilingual-ner
-            displayEntities(data.entities_wikineural_ner, 'entitiesWikineuralNer', true);
-            // Ajout de la logique pour afficher les entités détectées par le modèle TinyBERT
-            displayEntities(data.entities_custom_model, 'entitiesCustomModel', true);
-        }
-
-        function displayEntities(entities, elementId, showScore) {
-            const entitiesDiv = document.getElementById(elementId);
-            entitiesDiv.innerHTML = ''; // Clear previous results
-            entities.forEach(entity => {
-                const entityElement = document.createElement('div');
-                let textContent = `${entity.entity} (${entity.type})`;
-                if (showScore) {
-                    textContent += ` - Score : ${entity.score.toFixed(2)}`;
-                }
-                entityElement.textContent = textContent;
-                entitiesDiv.appendChild(entityElement);
-            });
-        }
-
-        function previewImage() {
-            var oFReader = new FileReader();
-            oFReader.readAsDataURL(document.getElementById("fileInput").files[0]);
-
-            oFReader.onload = function (oFREvent) {
-                document.getElementById("imagePreview").innerHTML = '<img src="'+oFREvent.target.result+'" alt="Image preview" class="img-fluid"/>';
-            };
-        }
-    </script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="static/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="static/demo/chart-area-demo.js"></script>
+        <script src="static/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="static/datatables-simple-demo.js"></script>
+    </body>
 </html>
