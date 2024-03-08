@@ -15,10 +15,12 @@
         <input type="file" id="fileInput" class="form-control mt-2">
         <button onclick="analyzeText()" class="btn btn-primary mt-2">Analyze</button>
     </div>
-    <h2>Entities</h2>
-    <div id="entities" class="result-box"></div>
-    <h2>Relationships</h2>
-    <div id="relationships" class="result-box"></div>
+    <h2>Entities from spaCy</h2>
+    <div id="entitiesSpacy" class="result-box"></div>
+    <h2>Entities from dslim/bert-base-NER</h2>
+    <div id="entitiesBertBaseNer" class="result-box"></div>
+    <h2>Entities from Babelscape/wikineural-multilingual-ner</h2>
+    <div id="entitiesWikineuralNer" class="result-box"></div>
 
     <script>
         async function analyzeText() {
@@ -38,7 +40,7 @@
     
             const response = await fetch('/analyze/', {
                 method: 'POST',
-                body: formData // Use FormData to send text or file
+                body: formData
             });
     
             if (!response.ok) {
@@ -48,17 +50,31 @@
     
             const data = await response.json(); // Assuming the response is JSON
     
-            // Assuming the backend returns an object with an 'entities' array
-            const entitiesDiv = document.getElementById('entities');
+            // Display entities from spaCy
+            displayEntities(data.entities_spacy, 'entitiesSpacy', false);
+
+            // Display entities from dslim/bert-base-NER
+            displayEntities(data.entities_bert_base_ner, 'entitiesBertBaseNer', true);
+
+            // Display entities from Babelscape/wikineural-multilingual-ner
+            displayEntities(data.entities_wikineural_ner, 'entitiesWikineuralNer', true);
+        }
+
+        function displayEntities(entities, elementId, showScore) {
+            const entitiesDiv = document.getElementById(elementId);
             entitiesDiv.innerHTML = ''; // Clear previous results
-            data.entities.forEach(entity => {
+            entities.forEach(entity => {
                 const entityElement = document.createElement('div');
-                entityElement.textContent = `${entity.entity} (${entity.type}) - ${entity.url ? entity.url : 'No URL found'}`;
+                let textContent = `${entity.entity} (${entity.type})`;
+                if (showScore) {
+                    textContent += ` - Score: ${entity.score.toFixed(2)}`;
+                }
+                textContent += `, URL: ${entity.url ? entity.url : 'No URL found'}`;
+                entityElement.textContent = textContent;
                 entitiesDiv.appendChild(entityElement);
             });
         }
     </script>
-    
 
     <style>
         .result-box {
@@ -70,3 +86,4 @@
     </style>
 </body>
 </html>
+
