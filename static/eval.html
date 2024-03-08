@@ -12,7 +12,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="styles.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        
         <style>
             .result-box {
                 border: 1px solid #ccc;
@@ -23,6 +27,7 @@
             }
             body {
                 padding-top: 20px;
+                font-family: 'Open Sans', sans-serif;
             }
             .loading-spinner {
                 display: none;
@@ -43,7 +48,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
-                <a class="btn btn-primary" href="https://github.com/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
+                <a class="btn btn-primary" href="https://github.com/Simounawind/web_interface_projet/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
             </div>
             
             <!-- Navbar-->
@@ -55,12 +60,12 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <div class="sb-sidenav-menu-heading">INDEX</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Menu
                             </a>
-                            <div class="sb-sidenav-menu-heading">Fonctions</div>
+                            <div class="sb-sidenav-menu-heading">Présentation</div>
                             <a class="nav-link" href="docs.html" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Docs
@@ -76,7 +81,7 @@
                             <br>
                         </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Projet Web Interface</div>
+                        <div class="small">🤗 Projet Web Interface & Réseaux de neurones 🤗</div>
                         <div class="small">By Xiaohua CUI, Yingzi LIU </div>
                     </div>
                 </nav>
@@ -263,7 +268,6 @@
                                 <p>Les résultats de l'évaluation du modèle révèlent une performance variable selon les catégories. Certaines, telles que les entités géographiques (LOC), montrent des performances relativement bonnes, avec une précision de 55.33% et un rappel de 43.65%. Cependant, d'autres catégories comme les personnes (PER) et les organisations (ORG) présentent des performances modérées à faibles, avec des précisions de 41.34% et 18.04% respectivement, ainsi que des rappels de 32.81% et 6.40%. Plusieurs catégories, dont ANIM, CEL, DIS, EVE, FOOD, INST, MYTH, PLANT, et VEHI, montrent une performance nulle, suggérant des lacunes dans les données d'entraînement ou des limitations du modèle. Globalement, le modèle atteint une précision de 49.18%, un rappel de 28.27% et un score F1 de 35.90%, avec une exactitude globale de 90.95%. Des améliorations potentielles incluent l'ajustement des hyperparamètres, l'exploration de techniques de data augmentation et l'utilisation de modèles ensemblistes. En conclusion, bien que le modèle montre une certaine efficacité, des améliorations sont nécessaires pour une performance optimale dans la reconnaissance d'entités nommées en français.</p>
                         </div>
                     </div>
-                    <div style="height: 100vh"></div>
                     </div>
                 </div>
                 </main>

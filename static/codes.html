@@ -12,6 +12,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./mono-blue.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script src="static/js/highlight.min.js"></script>
 
@@ -27,6 +31,7 @@
                 background-color: #f9f9f9;
             }
             body {
+                font-family: 'Open Sans', sans-serif;
                 padding-top: 20px;
             }
             .loading-spinner {
@@ -48,7 +53,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
-                <a class="btn btn-primary" href="https://github.com/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
+                <a class="btn btn-primary" href="https://github.com/Simounawind/web_interface_projet/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
             </div>
             
             <!-- Navbar-->
@@ -60,12 +65,12 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <div class="sb-sidenav-menu-heading">INDEX</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Menu
                             </a>
-                            <div class="sb-sidenav-menu-heading">Fonctions</div>
+                            <div class="sb-sidenav-menu-heading">Présentation</div>
                             <a class="nav-link" href="docs.html" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Docs
@@ -81,7 +86,7 @@
                             <br>
                         </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Projet Web Interface</div>
+                        <div class="small">🤗 Projet Web Interface & Réseaux de neurones 🤗</div>
                         <div class="small">By Xiaohua CUI, Yingzi LIU </div>
                     </div>
                 </nav>
@@ -91,47 +96,138 @@
                 <div class="container" style="margin-left: 40px;">                                      
                     <div>
                         <div class="card-body">
-                            <p class="mb-0">
-                                Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            </p>
+                            
                             <pre
                             class="script Python"
                           ><code style="font-family: 'Courier New', Courier, monospace;">
-          ###################################### Partie r1
-          import sys
-          import argparse
-          parser = argparse.ArgumentParser(
-              description="Obtenir un argument par bash command, un argument qui indique le chemin des fichiers")
-          parser.add_argument('--chemin', type=str, nargs='+',
-                              help='le chemin relatif des fichiers')
-          args = parser.parse_args()
-          
-          Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-          args = parser.parse_args()
-
-          args = parser.parse_args()
-
-          args = parser.parse_args()
-
-          args = parser.parse_args()
+                            from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
+                            import torch
+                            from fastapi import FastAPI, Form, File, UploadFile, Request
+                            from fastapi.staticfiles import StaticFiles
+                            from fastapi.templating import Jinja2Templates
+                            from fastapi.responses import JSONResponse
+                            import spacy
+                            import wikipediaapi
+                            import aiofiles
+                            
+                            # Créer une instance d'application FastAPI
+                            app = FastAPI()
+                            
+                            # Monter le répertoire statique pour servir des fichiers statiques
+                            app.mount("/static", StaticFiles(directory="static"), name="static")
+                            
+                            # Initialiser les templates Jinja2 pour la génération de HTML
+                            templates = Jinja2Templates(directory="templates")
+                            
+                            # Charger le modèle spaCy français pour la reconnaissance d'entités nommées (NER)
+                            nlp_spacy = spacy.load("fr_core_news_sm")
+                            
+                            # Initialiser les modèles de reconnaissance d'entités nommées (NER) de Transformers
+                            nlp_bert_base_ner = pipeline("ner", model="dslim/bert-base-NER")
+                            nlp_wikineural_ner = pipeline("ner", model="Babelscape/wikineural-multilingual-ner")
+                            
+                            # Initialiser le modèle TinyBERT finetuned pour la NER
+                            tokenizer_custom = AutoTokenizer.from_pretrained("Tinybert-finetuned-ner")
+                            model_custom = AutoModelForTokenClassification.from_pretrained("Tinybert-finetuned-ner")
+                            nlp_custom = pipeline("ner", model=model_custom, tokenizer=tokenizer_custom)
+                            
+                            # Initialiser WikipediaAPI avec un agent utilisateur personnalisé pour les requêtes
+                            wiki_wiki = wikipediaapi.Wikipedia(language='fr', user_agent="MyAppName/1.0 (myemail@example.com)")
+                            
+                            app.mount("/static", StaticFiles(directory="static"), name="static")
+                            
+                            
+                            
+                            @app.get("/")
+                            async def root(request: Request):
+                                # Générer et retourner la page d'accueil en utilisant un template Jinja2
+                                return templates.TemplateResponse("index.html", {"request": request})
+                            
+                            
+                            @app.post("/analyze/")
+                            async def analyze_text(text: str = Form(default=""), file: UploadFile = File(None)):
+                                try:
+                                    # Gérer la réception du contenu texte ou d'un fichier
+                                    if file:
+                                        contents = await file.read()
+                                        text = contents.decode("utf-8")
+                                        await file.close()
+                                        print("Contenu du fichier reçu :", text)
+                                    else:
+                                        print("Contenu texte reçu :", text)
+                            
+                                    if not text:
+                                        return {"error": "Aucun texte fourni"}
+                            
+                                    # Traitement du texte avec spaCy pour la reconnaissance d'entités nommées
+                                    entities_spacy = []
+                                    doc_spacy = nlp_spacy(text)
+                                    print("Entités détectées par spaCy :", doc_spacy.ents)
+                                    for ent in doc_spacy.ents:
+                                        wiki_page = wiki_wiki.page(ent.text)
+                                        url = wiki_page.fullurl if wiki_page.exists() else None
+                                        entities_spacy.append({"entity": ent.text, "type": ent.label_, "url": url})
+                            
+                                    print("Entités traitées par spaCy :", entities_spacy)
+                                    
+                                    # Traitement du texte avec le modèle BERT-base-NER de Transformers
+                                    entities_bert_base_ner = []
+                                    results_bert_base = nlp_bert_base_ner(text)
+                                    print("Sortie du modèle BERT base NER :", results_bert_base)
+                                    for result in results_bert_base:
+                                        entity = text[result['start']:result['end']]
+                                        wiki_page = wiki_wiki.page(entity)
+                                        url = wiki_page.fullurl if wiki_page.exists() else None
+                                        score = float(result['score']) if 'score' in result else None
+                                        entities_bert_base_ner.append({"entity": entity, "type": result['entity'], "score": score, "url": url})
+                            
+                                    print("Entités traitées par BERT :", entities_bert_base_ner)
+                            
+                                    # Traitement du texte avec le modèle Wikineural-multilingual-ner de Transformers
+                                    entities_wikineural_ner = []
+                                    results_wikineural = nlp_wikineural_ner(text)
+                                    print("Sortie du modèle Wikineural NER :", results_wikineural)
+                                    for result in results_wikineural:
+                                        entity = text[result['start']:result['end']]
+                                        wiki_page = wiki_wiki.page(entity)
+                                        url = wiki_page.fullurl if wiki_page.exists() else None
+                                        score = float(result['score']) if 'score' in result else None
+                                        entities_wikineural_ner.append({"entity": entity, "type": result['entity'], "score": score, "url": url})
+                            
+                                    print("Entités traitées par Wikineural :", entities_wikineural_ner)
+                            
+                                    # utiliser le modèle TinyBERT finetuned pour la NER
+                                    results_custom = nlp_custom(text)
+                            
+                                    entities_custom = []
+                                    for result in results_custom:
+                                        entity_text = text[result['start']:result['end']]
+                                        score = result.get('score')
+                                        if score is not None:  # faire en sorte que le score existe
+                                            score = float(score)  # convertir le score en float standard
+                                        entities_custom.append({"entity": entity_text, "type": result['entity'], "score": score})
+                            
+                                    # retourner la réponse JSON
+                                    # return JSONResponse(content={"entities_custom_model": entities_custom})
+                            
+                                    # Fusionner les résultats et les retourner
+                                    return {
+                                        "entities_spacy": entities_spacy,
+                                        "entities_bert_base_ner": entities_bert_base_ner,
+                                        "entities_wikineural_ner": entities_wikineural_ner,
+                                        "entities_custom_model": entities_custom
+                                    }
+                                except Exception as e:
+                                    print(f"Une erreur est survenue : {e}")
+                                    return {"error": "Erreur interne du serveur"}, 500
+                            
+                            
 
                                                  
                                             </code></pre>
           
 
-                            <p class="mb-0">
-                                Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                <code>Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</code>
-                                Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-
-<code>body</code>
-Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-
-</p>
-                        </div>
-                    </div>
-                    <div style="height: 100vh"></div>
-                    <div class="card mb-4"><div class="card-body">whCurabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</div></div>
+                                                    </div>
                     </div>
                 </div>
                 </main>

@@ -38,12 +38,12 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/">Extrait d'Entités Nommées (NER)</a>
+            <a class="navbar-brand ps-3" href="/">Extrait d'Entités Nommées (NER) 🤗</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
-                <a class="btn btn-primary" href="https://github.com/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
+                <a class="btn btn-primary" href="https://github.com/Simounawind/web_interface_projet/" role="button"><i class="fab fa-github"></i> Repos GitHub</a>
             </div>
             
             <!-- Navbar-->
@@ -55,12 +55,12 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <div class="sb-sidenav-menu-heading">INDEX</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Menu
                             </a>
-                            <div class="sb-sidenav-menu-heading">Fonctions</div>
+                            <div class="sb-sidenav-menu-heading">Présentation</div>
                             <a class="nav-link" href="/static/docs.html" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Docs
@@ -76,7 +76,7 @@
                             <br>
                         </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Projet Web Interface & Réseaux de neurones</div>
+                        <div class="small">🤗 Projet Web Interface & Réseaux de neurones 🤗</div>
                         <div class="small">By Xiaohua CUI, Yingzi LIU </div>
                     </div>
 
@@ -102,13 +102,20 @@
                             </div>
                         </div>
                         <div id="imagePreview"></div>
-                        <h2>Modèle spaCy</h2>
+  
+                        <h2> 1️⃣ Modèle spaCy</h2>
                         <div id="entitiesSpacy" class="result-box"></div>
-                        <h2>Modèle dslim/bert-base-NER</h2>
+
+                    </br></br></br></br>
+                        <h2> 2️⃣ Modèle dslim/bert-base-NER</h2>
                         <div id="entitiesBertBaseNer" class="result-box"></div>
-                        <h2>Modèle Babelscape/wikineural-multilingual-ner</h2>
+
+                    </br></br></br></br>
+                        <h2> 3️⃣ Modèle Babelscape/wikineural-multilingual-ner</h2>
                         <div id="entitiesWikineuralNer" class="result-box"></div>
-                        <h2>Modèle TinyBERT Finetuned</h2> <!-- Ajout du titre pour le modèle TinyBERT -->
+
+                    </br></br></br></br>
+                        <h2> 4️⃣ Modèle TinyBERT Finetuned</h2> <!-- Ajout du titre pour le modèle TinyBERT -->
                         <div id="entitiesCustomModel" class="result-box"></div> <!-- Ajout de la boîte de résultats pour le modèle TinyBERT -->
 
                         </div>
