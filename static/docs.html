@@ -1,111 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>DOCSSS</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <style>
-            .result-box {
-                border: 1px solid #ccc;
-                padding: 10px;
-                margin-top: 20px;
-                min-height: 100px;
-                background-color: #f9f9f9;
-            }
-            body {
-                padding-top: 20px;
-            }
-            .loading-spinner {
-                display: none;
-                width: 3rem;
-                height: 3rem;
-            }
-            #imagePreview {
-                margin-top: 20px;
-                max-height: 200px;
-            }
-        </style>
-    </head>
-    <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/">Extrait d'Entités Nommées (NER)</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
-                <a class="btn btn-primary" href="https://github.com/" role="button" style><i class="fab fa-github"></i> Repos GitHub</a>
-            </div>
-            
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="/">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Menu
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Fonctions</div>
-                            <a class="nav-link" href="docs.html" >
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Docs
-                            </a>
-                            <a class="nav-link" href="codes.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Codes
-                            </a>
-                            <a class="nav-link" href="eval.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Évaluation
-                            </a>
-                            <br>
-                        </div>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>DOCSSS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .result-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+            background-color: #f9f9f9;
+        }
+
+        body {
+            padding-top: 20px;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        #imagePreview {
+            margin-top: 20px;
+            max-height: 200px;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="/">Extrait d'Entités Nommées (NER)</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <div class="d-none d-md-inline-block ms-auto me-0 me-md-3 my-2 my-md-0">
+            <a class="btn btn-primary" href="https://github.com/" role="button" style><i class="fab fa-github"></i>
+                Repos GitHub</a>
+        </div>
+
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Menu
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Fonctions</div>
+                        <a class="nav-link" href="docs.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Docs
+                        </a>
+                        <a class="nav-link" href="codes.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Codes
+                        </a>
+                        <a class="nav-link" href="eval.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Évaluation
+                        </a>
+                        <br>
+                    </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Projet Web Interface</div>
                         <div class="small">By Xiaohua CUI, Yingzi LIU </div>
                     </div>
-                </nav>
-            </div>   
+            </nav>
+        </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container" style="margin-left: 40px;">                                      
-                    <div>
-                        <div class="card-body">
-                            <p class="mb-0">
-                                Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.               </p>
-
-
-                            <p class="mb-0">
-                                Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.           </p>
-                        </div>
-                    </div>
-                    <div style="height: 100vh"></div>
-                    <div class="card mb-4"><div class="card-body">Curabitur suscipit suscipit tellus. Sed lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</div></div>
-                    </div>
+                <div class="container" style="margin-left: 40px;">
+                    <div class="card-body">
+                    </p>
+                    <hr> <!-- Ligne de séparation -->
+                    <!-- Nouveau contenu ajouté -->
+                    <p>
+                        <h2>📚 Introduction</h2>
+                        <p>
+                            Dans le cadre de notre exploration approfondie de l'univers de la reconnaissance d'entités
+                            nommées (NER), nous avons mis en œuvre une approche méthodique pour étudier et comparer
+                            l'efficacité de divers modèles de renom dans ce domaine. Notre quête nous a menés à
+                            sélectionner et à utiliser trois modèles pré-entraînés particulièrement distingués, chacun
+                            apportant une contribution unique à notre compréhension globale de la NER. Voici les modèles
+                            que nous avons choisis pour notre voyage :
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>spaCy</strong> : Reconnu pour sa rapidité et son efficacité, le modèle
+                                fr_core_news_sm de spaCy offre une base solide pour la reconnaissance d'entités en
+                                français. C'est un choix privilégié pour les applications nécessitant une grande vitesse
+                                de traitement et une bonne précision.
+                            </li>
+                            <li>
+                                <strong>dslim/bert-base-NER</strong> : Ce modèle, basé sur l'architecture Transformer de
+                                BERT et pré-entraîné sur un vaste corpus, est spécialisé dans la reconnaissance
+                                d'entités nommées. Il est connu pour sa capacité à comprendre le contexte des mots dans
+                                des phrases, ce qui le rend extrêmement efficace pour identifier avec précision divers
+                                types d'entités.
+                            </li>
+                            <li>
+                                <strong>Babelscape/wikineural-multilingual-ner</strong> : Ce modèle tire parti de
+                                l'apprentissage profond pour offrir une reconnaissance d'entités nommées dans plusieurs
+                                langues, y compris le français. Grâce à son entraînement sur des données provenant de
+                                Wikipedia, il est capable de reconnaître un large éventail d'entités à travers
+                                différents domaines.
+                            </li>
+                            <li>
+                                <strong>Fine-tuned TinyBERT</strong> : Au-delà de l'adoption de modèles pré-entraînés
+                                réputés, nous avons également pris l'initiative ambitieuse d'adapter un modèle pour
+                                répondre précisément à nos exigences particulières. En tirant parti du <a
+                                    href="https://huggingface.co/datasets/Babelscape/multinerd">MultiNERD dataset</a>,
+                                nous avons procédé au fine-tuning d'un <a
+                                    href="https://huggingface.co/huawei-noah/TinyBERT_General_4L_312D">modèle
+                                    TinyBERT</a> spécifiquement pour notre projet. Le choix de TinyBERT était motivé par
+                                sa structure légère et efficace, rendant possible une haute performance tout en
+                                maintenant une consommation de ressources réduite. TinyBERT se distingue dans le domaine
+                                du TAL par sa capacité à comprimer les modèles de langue de grande taille tout en
+                                préservant leur puissance et leur efficacité.
+                            </li>
+                        </ul>
+                        <h2>🎯 Objectif</h2>
+                        <p>
+                            Notre mission principale est de créer un portail web intergalactique qui permet aux
+                            utilisateurs terriens de soumettre du texte en français et d'obtenir des annotations de NER
+                            d'une précision stellaire en utilisant quatre modèles distincts : le vénérable spaCy,
+                            l'illustre BERT-base (dslim/bert-base-NER), l'énigmatique Wikineural
+                            (Babelscape/wikineural-multilingual-ner) et l'intrépide TinyBERT, finetuné avec le précieux
+                            <a href="https://huggingface.co/datasets/Babelscape/multinerd">MultiNERD dataset</a>.
+                            L'objectif est d'offrir aux utilisateurs un moyen direct et visuellement intuitif de
+                            comparer les performances de chaque modèle, y compris notre adaptation personnalisée, pour
+                            répondre à des besoins spécifiques dans le domaine de la NER. Cette initiative entend
+                            proposer une ressource transparente et facilement accessible, destinée à faciliter la
+                            recherche et l'exploitation pratique de la reconnaissance d'entités nommées (NER).
+                        </p>
+                        <h2>👩‍🚀👨‍🚀 Auteurs</h2>
+                        <p>
+                            Cette aventure cosmique a été entreprise par Yingzi LIU et Xiaohua CUI, deux courageux
+                            étudiants de l'Université Sorbonne Nouvelle, armés de leur curiosité et de leur soif de
+                            connaissance.
+                        </p>
+                        <h2>✨ Fonctionnalités</h2>
+                        <ul>
+                            <li>Multi-modèles de Reconnaissance d'Entités Nommées (NER): Emploi de quatre puissants
+                                modèles de NER pour classifier et annoter le texte soumis, révélant les entités telles
+                                que les personnes, lieux, organisations, etc.</li>
+                            <li>Interface Web: Nous proposons une interface web élaborée et ergonomique, destinée aux
+                                utilisateurs désirant analyser des textes de manière détaillée. Ce portail permet de
+                                soumettre aisément des écrits ou documents pour une exploration NER complète.</li>
+                        </ul>
+                        <h2>📦 Contenu du Projet</h2>
+                        <ol>
+                            <li>Modèles de NER: Une quête épique à travers différents modèles de NER, cherchant à
+                                déterminer le plus vaillant.</li>
+                            <li>Fine-tuning de TinyBERT: L'art délicat d'adapter un modèle TinyBERT avec le trésor caché
+                                qu'est le MultiNERD dataset, dans le but d'améliorer sa performance sur des textes
+                                spécifiques.</li>
+                            <li>Développement d'une Interface Web: La construction d'un portail interstellaire pour
+                                soumettre des textes et visualiser les résultats de NER, un véritable pont entre l'homme
+                                et la machine.</li>
+                        </ol>
+                        <h2>🚀 Utilisation</h2>
+                        <ol>
+                            <li>Clonez le dépôt GitHub sur votre navire spatial (machine locale).</li>
+                            <li>Installez les composants nécessaires avec `pip install -r requirements.txt`.</li>
+                            <li>Lancez le serveur web avec `python app.py`.</li>
+                            <li>Accédez à l'interface web via votre navigateur spatial pour soumettre du texte ou des
+                                fichiers et recevoir des annotations de NER dignes d'une civilisation avancée.</li>
+                        </ol>
+                    </p>
+                    <hr> <!-- Ligne de séparation -->
+                    <!-- Nouveau contenu ajouté -->
+                    <p>
+                        <h2>🌟 Fine-tuning TinyBERT 🌟</h2>
+                    </p>
+                    <hr> <!-- Ligne de séparation -->
+                    <!-- Nouveau contenu ajouté -->
+                    <p>
+                        <h3>🔍 Le Dataset MultiNERD</h3>
+                        
+                            <p> Pour cette étude, le dataset MultiNERD a été utilisé. MultiNERD est une extension du célèbre dataset WikiANN pour la reconnaissance d'entités nommées multilingue. Développé par Babelscape, il vise à fournir une ressource riche et variée pour l'entraînement et l'évaluation de modèles de REN dans plus de 40 langues, y compris le français. Ce dataset contient des annotations pour une grande variété de types d'entités, offrant ainsi une base solide pour l'entraînement de modèles de REN performants.
+                        
+                        <h3>🔧 Fine-tuning de TinyBERT</h3>
+                        
+                            <p>TinyBERT est un modèle de langage transformateur conçu pour offrir une efficacité élevée et une performance remarquable dans diverses tâches de traitement du langage naturel (TLP), tout en étant significativement plus petit et plus rapide que ses prédécesseurs tels que BERT ou GPT. Développé par Huawei Noah's Ark Lab, TinyBERT se distingue par sa structure compacte qui permet une utilisation optimale dans des environnements avec des ressources limitées, tels que des dispositifs mobiles ou des serveurs avec peu de capacité de calcul.</p>
+                        <p>Les principaux avantages de TinyBERT résident dans sa taille réduite et sa consommation énergétique plus faible comparée à des modèles plus grands, tout en maintenant des performances compétitives. Ces caractéristiques le rendent particulièrement adapté aux applications nécessitant des réponses rapides et efficaces en termes de calcul, telles que la traduction en temps réel, l'assistance virtuelle, ou la reconnaissance d'entités nommées (REN) dans des documents textuels.</p>
+                            <h3>📐 Application dans la Reconnaissance d'Entités Nommées</h3>
+                           <p>La reconnaissance d'entités nommées est un domaine clé du TLP qui consiste à identifier et classer des éléments spécifiques dans un texte (tels que les noms de personnes, d'organisations, de lieux, etc.) dans des catégories prédéterminées. L'application de TinyBERT à cette tâche permet de bénéficier de sa rapidité d'exécution et de son efficacité, même sur des plateformes avec des capacités de calcul limitées.</p>
+                            <h3>🗜️ Défis Techniques</h3>
+                           <p>L'entraînement d'un modèle comme TinyBERT sur le dataset MultiNERD présente certains défis, notamment en raison de contraintes de ressources telles que la mémoire insuffisante et l'absence de GPU ou de CPU puissants. Ces limitations peuvent entraîner des interruptions et des échecs lors de l'entraînement du modèle.</p>
+                    <h3>🧲 Solutions Adoptées</h3>
+                    <p>Pour surmonter ces obstacles, plusieurs ajustements ont été effectués :</p>
+                    <p>Augmentation du gradient_accumulation_steps : Cette approche permet d'accumuler les gradients sur plusieurs étapes avant de mettre à jour les poids du modèle, réduisant ainsi le besoin en mémoire et en puissance de calcul. Cela s'avère crucial dans des environnements avec des ressources limitées.</p>
+                    <p>Réduction des per_device_train_batch_size et per_device_eval_batch_size à 1 : En diminuant la taille des lots pour l'entraînement et l'évaluation, on réduit la quantité de mémoire nécessaire, permettant au modèle de s'exécuter sur des appareils avec moins de ressources.</p>
+                <p>Sélection d'un sous-ensemble du dataset (subset_ratio = 0.1) : Face aux contraintes de ressources, réduire la taille du dataset d'entraînement devient une nécessité. Bien que cette méthode puisse limiter la diversité et la quantité des données d'entraînement, ce qui pourrait affecter la performance générale du modèle, elle permet néanmoins un entraînement viable sans surcharger la mémoire disponible.
+                </p>
+                <h3>🧭 Conclusion</h3>
+                <p>En conclusion, l'adaptation de TinyBERT pour la reconnaissance d'entités nommées en français démontre la flexibilité et l'efficacité des modèles de langage transformateurs compacts dans des scénarios avec des ressources limitées. Malgré les défis posés par les limitations de l'environnement d'entraînement, les ajustements apportés ont permis de mener à bien l'entraînement tout en maintenant une performance respectable. Ce travail souligne l'importance de l'optimisation des ressources dans le développement d'applications de traitement du langage naturel, en particulier dans des contextes où l'accès à des ressources de calcul avancées est limité.</p>
+            </div>
                 </div>
-                </main>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="demo/chart-area-demo.js"></script>
-        <script src="demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="datatables-simple-demo.js"></script>
-        
-    </body>
+            </main>
+        </div>
+
+    </div>
+    </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="demo/chart-area-demo.js"></script>
+    <script src="demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="datatables-simple-demo.js"></script>
+
+</body>
+
 </html>
