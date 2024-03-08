@@ -2,5 +2,8 @@ fastapi==0.65.2
 uvicorn==0.14.0
 spacy==3.0.6
 wikipedia-api==0.5.4
-transformers==4.5.1
 aiofiles==0.6.0
+datasets==1.11.0
+transformers[torch]==4.10.2
+seqeval==1.2.2
+accelerate==0.5.1
