@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyse sur les Entités Nommées (NER)</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Optional JavaScript -->
-    <!-- Popper.js, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
@@ -55,6 +52,8 @@
     <div id="entitiesBertBaseNer" class="result-box"></div>
     <h2>Modèle Babelscape/wikineural-multilingual-ner</h2>
     <div id="entitiesWikineuralNer" class="result-box"></div>
+    <h2>Modèle TinyBERT Finetuned</h2> <!-- Ajout du titre pour le modèle TinyBERT -->
+    <div id="entitiesCustomModel" class="result-box"></div> <!-- Ajout de la boîte de résultats pour le modèle TinyBERT -->
 
     <script>
         async function analyzeText() {
@@ -76,7 +75,7 @@
                 return;
             }
     
-            const response = await fetch('/analyze/', {
+            const response = await fetch('/analyze/', { // Modification de l'URL pour correspondre au nouvel endpoint
                 method: 'POST',
                 body: formData
             });
@@ -89,15 +88,14 @@
             }
     
             const data = await response.json(); // Assuming the response is in JSON
-    
             // Display entities detected by spaCy
             displayEntities(data.entities_spacy, 'entitiesSpacy', false);
-
             // Display entities detected by dslim/bert-base-NER
             displayEntities(data.entities_bert_base_ner, 'entitiesBertBaseNer', true);
-
             // Display entities detected by Babelscape/wikineural-multilingual-ner
             displayEntities(data.entities_wikineural_ner, 'entitiesWikineuralNer', true);
+            // Ajout de la logique pour afficher les entités détectées par le modèle TinyBERT
+            displayEntities(data.entities_custom_model, 'entitiesCustomModel', true);
         }
 
         function displayEntities(entities, elementId, showScore) {
@@ -109,7 +107,6 @@
                 if (showScore) {
                     textContent += ` - Score : ${entity.score.toFixed(2)}`;
                 }
-                textContent += `, URL : ${entity.url ? entity.url : 'Aucune URL trouvée'}`;
                 entityElement.textContent = textContent;
                 entitiesDiv.appendChild(entityElement);
             });
