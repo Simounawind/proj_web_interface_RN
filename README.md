@@ -2,6 +2,8 @@
 
 Ce projet a été développé avec passion et dévouement dans le cadre des cours "Interfaces web pour le TAL" et "Réseaux de neurones", brillamment dirigés par M. Loïc Grobol à l'Université Paris Nanterre.
 
+
+
 ## 📚 Introduction
 
 Dans le cadre de notre exploration approfondie de l'univers de la reconnaissance d'entités nommées (NER), nous avons mis en œuvre une approche méthodique pour étudier et comparer l'efficacité de divers modèles de renom dans ce domaine. Notre quête nous a menés à sélectionner et à utiliser trois modèles pré-entraînés particulièrement distingués, chacun apportant une contribution unique à notre compréhension globale de la NER. Voici les modèles que nous avons choisis pour notre voyage :
@@ -33,20 +35,26 @@ Cette aventure cosmique a été entreprise par Yingzi LIU et Xiaohua CUI, deux c
 2. **Fine-tuning de TinyBERT**: L'art délicat d'adapter un modèle TinyBERT avec le trésor caché qu'est le [MultiNERD dataset](https://huggingface.co/datasets/Babelscape/multinerd), dans le but d'améliorer sa performance sur des textes spécifiques.
 3. **Développement d'une Interface Web**: La construction d'un portail interstellaire pour soumettre des textes et visualiser les résultats de NER, un véritable pont entre l'homme et la machine.
 
-## 🚀 Utilisation
+## Installation et exécution 🛠️
 
 1. Clonez le dépôt GitHub sur votre navire spatial (machine locale).
 2. Installez les composants nécessaires avec `pip install -r requirements.txt`.
-3. Lancez le serveur web avec `python app.py`.
+3. Lancez le serveur web avec `python app.py`, ou via terminal avec un serveur Web comme `uvicorn`
 4. Accédez à l'interface web via votre navigateur spatial pour soumettre du texte ou des fichiers et recevoir des annotations de NER dignes d'une civilisation avancée.
+
+>  Vous devez installer un serveur Web asynchrone tel que `uvicorn`, ainsi que les modules nécessaires tels que `fastapi`. 
+>
+> De plus, il pourrait être nécessaire de télécharger différents modèles via `transformers`, nous vous recommandons donc fortement de télécharger ces éléments via une connexion Wi-Fi stable en raison de la taille potentielle des fichiers.
 
 ## 🤝 Contributions
 
 Nous encourageons les contributions de tous les coins de l'univers ! Pour signaler un bug interstellaire ou proposer des améliorations cosmiques, ouvrez une issue ou soumettez une pull request.
 
-## 📜 Licence
+## 🧪 Améliorations et expérimentations avec LLMs 
 
-Ce projet est distribué sous la licence MIT, un pacte de bonne volonté intergalactique. Pour plus de détails, consultez le fichier LICENSE.
+Notre projet est en constante évolution, surtout à l'ère des grands modèles de langage. Nous avons expérimenté avec des LLMs plus petits, tels que `LLama2` et `Qwen1.5`. Notamment, `Qwen1.5`, un grand modèle de langage produit en Chine, offre un modèle de 0.5B, se caractérisant par sa compacité et son efficacité. Cependant, en raison des besoins spécifiques de notre projet et des problèmes de compatibilité avec notre système de développement sur Mac, nous avons dû abandonner cette option.
+
+N'hésitez pas à contribuer et à nous faire part de vos suggestions d'amélioration ! 🌟
 
 ## 📞 Contact
 
@@ -56,3 +64,10 @@ Pour toute question ou pour transmettre des signaux de détresse, contactez-nous
 - Xiaohua CUI : xiaohua.cui@sorbonne-nouvelle.fr
 
 Nous vous remercions infiniment pour votre intérêt dans notre projet et nous espérons que vous y trouverez autant de plaisir et d'émerveillement que nous en avons eu à le développer !
+
+## 📜 Licence
+
+Ce projet est distribué sous la licence MIT, un pacte de bonne volonté intergalactique. Pour plus de détails, consultez le fichier LICENSE.
+
+
+
